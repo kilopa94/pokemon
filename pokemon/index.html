@@ -78,6 +78,12 @@
     };
     $.getJSON(pokemons, function (result) {
     resultado = result;
+    if (new URLSearchParams(window.location.search).get("entrenador")) {
+        if (new URLSearchParams(window.location.search).get("entrenador").length > 0) {
+            $("#entrenador").val(new URLSearchParams(window.location.search).get("entrenador"));
+            $("#enviar").click();
+        }
+    }
     $.each(result, function (i, field) {});
     });
     $("#enviar").click(pokemonDatos);
