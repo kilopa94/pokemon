@@ -27,18 +27,18 @@
     var resultado;
     var pokemons = "https://danirivasmayor.000webhostapp.com/pokemon/listarTodo.php";
     var pokemonDatos = function () {
-    if (resultado[$("#entrenador").val()]) {
+    if (resultado[$("#entrenador").val().toLowerCase()]) {
         var tablahtml =
             "<table class='table table-hover'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
-        $.each(resultado[$("#entrenador").val()], function (i, field) {
+        $.each(resultado[$("#entrenador").val().toLowerCase()], function (i, field) {
             tablahtml += "<tr>";
-            $.each(resultado[$("#entrenador").val()][i], function (i2, field2) {
+            $.each(resultado[$("#entrenador").val().toLowerCase()][i], function (i2, field2) {
                 if (i2 == 0) {
-                    if (resultado[$("#entrenador").val()][i][2] == "si") {
-                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val()][i][7]+"-shiny.gif' width='40px'><br>" + field2 + "</td>";
-                        resultado[$("#entrenador").val()][i][5] = "8";
+                    if (resultado[$("#entrenador").val().toLowerCase()][i][2] == "si") {
+                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val().toLowerCase()][i][7]+"-shiny.gif' width='40px'><br>" + field2 + "</td>";
+                        resultado[$("#entrenador").val().toLowerCase()][i][5] = "8";
                     } else {
-                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val()][i][7]+".gif' width='40px'><br>" + field2 + "</td>";
+                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val().toLowerCase()][i][7]+".gif' width='40px'><br>" + field2 + "</td>";
                     }
                 } else if (i2 == 5 || i2 == 6) {
                     if (field2 == "1") {
