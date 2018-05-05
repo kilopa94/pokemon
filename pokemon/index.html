@@ -30,7 +30,7 @@
             });
             $("#enviar").click(function(){
                 if (resultado[$("#entrenador").val()]) {
-                    var tablahtml = "<table class='table'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
+                    var tablahtml = "<table class='table table-hover'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
                     $.each(resultado[$("#entrenador").val()], function(i, field){
                         tablahtml += "<tr>";
                         $.each(resultado[$("#entrenador").val()][i], function(i2, field2){
