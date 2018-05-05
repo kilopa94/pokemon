@@ -30,13 +30,35 @@
             });
             $("#enviar").click(function(){
                 if (resultado[$("#entrenador").val()]) {
-                    var tablahtml = "<table class='table'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th></tr>";
+                    var tablahtml = "<table class='table'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
                     $.each(resultado[$("#entrenador").val()], function(i, field){
                         tablahtml += "<tr>";
                         $.each(resultado[$("#entrenador").val()][i], function(i2, field2){
                             if (i2 == 0 && resultado[$("#entrenador").val()][i][2] == "si") {
                                 tablahtml += "<td>"+field2+" shiny</td>";
                             }
+                            else if (i2 == 5 || i2 == 6) {
+                                if (field2 == "1") {
+                                    tablahtml += "<td>Muy común</td>";
+                                } else if (field2 == "2") {
+                                    tablahtml += "<td>Común</td>";
+                                } else if (field2 == "3") {
+                                    tablahtml += "<td>Algo Común</td>";
+                                } else if (field2 == "4") {
+                                    tablahtml += "<td>Poco Común</td>";
+                                } else if (field2 == "5") {
+                                    tablahtml += "<td>Algo Raro</td>";
+                                } else if (field2 == "6") {
+                                    tablahtml += "<td>Raro</td>";
+                                } else if (field2 == "7") {
+                                    tablahtml += "<td>Super Raro</td>";
+                                } else if (field2 == "8") {
+                                    tablahtml += "<td>Rarísimo</td>";
+                                } else if (field2 == "9") {
+                                    tablahtml += "<td>Ultra rarísimo</td>";
+                                }
+
+                            }  
                             else if (i2 != 2) {
                                 if (field2 == null) {
                                     field2 = "";
