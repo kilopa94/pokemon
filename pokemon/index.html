@@ -33,9 +33,13 @@
         $.each(resultado[$("#entrenador").val()], function (i, field) {
             tablahtml += "<tr>";
             $.each(resultado[$("#entrenador").val()][i], function (i2, field2) {
-                if (i2 == 0 && resultado[$("#entrenador").val()][i][2] == "si") {
-                    tablahtml += "<td>" + field2 + " shiny</td>";
-                    resultado[$("#entrenador").val()][i][5] = "8";
+                if (i2 == 0) {
+                    if (resultado[$("#entrenador").val()][i][2] == "si") {
+                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val()][i][7]+"-shiny.gif' width='40px'><br>" + field2 + "</td>";
+                        resultado[$("#entrenador").val()][i][5] = "8";
+                    } else {
+                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val()][i][7]+".gif' width='40px'><br>" + field2 + "</td>";
+                    }
                 } else if (i2 == 5 || i2 == 6) {
                     if (field2 == "1") {
                         tablahtml += "<td>Muy común</td>";
@@ -57,7 +61,7 @@
                         tablahtml += "<td>Ultra rarísimo</td>";
                     }
 
-                } else if (i2 != 2) {
+                } else if (i2 != 2 && i2 != 7) {
                     if (field2 == null) {
                         field2 = "";
                     }
