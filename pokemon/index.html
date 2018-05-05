@@ -1,79 +1,87 @@
 <html>
-    <head>
-        <title>Listado Pokemon</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="container">
-            <form action="#" method="GET">
-                <div class="form-group">
-                    <input type="text" id="entrenador" class="form-control" placeholder="Introduce el nombre del entrenador">
-                    <input type="submit" id="enviar" value="Enviar">
-                </div>
-            </form>
-            <div id="datos" class="table-responsive">
-                
-            </div>
-        </div>
-    </body>
-    <script>
-        $(document).ready(function() {
-            var resultado;
-            var pokemons = "https://danirivasmayor.000webhostapp.com/pokemon/listarTodo.php";
-            $.getJSON(pokemons, function(result){
-                resultado = result;
-                $.each(result, function(i, field){
-                });
-            });
-            $("#enviar").click(function(){
-                if (resultado[$("#entrenador").val()]) {
-                    var tablahtml = "<table class='table table-hover'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
-                    $.each(resultado[$("#entrenador").val()], function(i, field){
-                        tablahtml += "<tr>";
-                        $.each(resultado[$("#entrenador").val()][i], function(i2, field2){
-                            if (i2 == 0 && resultado[$("#entrenador").val()][i][2] == "si") {
-                                tablahtml += "<td>"+field2+" shiny</td>";
-                            }
-                            else if (i2 == 5 || i2 == 6) {
-                                if (field2 == "1") {
-                                    tablahtml += "<td>Muy común</td>";
-                                } else if (field2 == "2") {
-                                    tablahtml += "<td>Común</td>";
-                                } else if (field2 == "3") {
-                                    tablahtml += "<td>Algo Común</td>";
-                                } else if (field2 == "4") {
-                                    tablahtml += "<td>Poco Común</td>";
-                                } else if (field2 == "5") {
-                                    tablahtml += "<td>Algo Raro</td>";
-                                } else if (field2 == "6") {
-                                    tablahtml += "<td>Raro</td>";
-                                } else if (field2 == "7") {
-                                    tablahtml += "<td>Super Raro</td>";
-                                } else if (field2 == "8") {
-                                    tablahtml += "<td>Rarísimo</td>";
-                                } else if (field2 == "9") {
-                                    tablahtml += "<td>Ultra rarísimo</td>";
-                                }
 
-                            }  
-                            else if (i2 != 2) {
-                                if (field2 == null) {
-                                    field2 = "";
-                                }
-                                tablahtml += "<td>"+field2+"</td>";
-                            }
-                        })
-                        tablahtml += "</tr>"; 
-                    });
-                    tablahtml += "</table>";
-                    $("#datos").html(tablahtml);
-                } else {
-                    $("#datos").html("<h1>No se encontró a ese entrenador");
+<head>
+    <title>Listado Pokemon</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+            <div class="form-group">
+                <input type="text" id="entrenador" class="form-control" placeholder="Introduce el nombre del entrenador">
+                <input type="submit" id="enviar" value="Enviar">
+            </div>
+        <div id="datos" class="table-responsive">
+
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+    var resultado;
+    var pokemons = "https://danirivasmayor.000webhostapp.com/pokemon/listarTodo.php";
+    var pokemonDatos = function () {
+    if (resultado[$("#entrenador").val()]) {
+        var tablahtml =
+            "<table class='table table-hover'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
+        $.each(resultado[$("#entrenador").val()], function (i, field) {
+            tablahtml += "<tr>";
+            $.each(resultado[$("#entrenador").val()][i], function (i2, field2) {
+                if (i2 == 0 && resultado[$("#entrenador").val()][i][2] == "si") {
+                    tablahtml += "<td>" + field2 + " shiny</td>";
+                    resultado[$("#entrenador").val()][i][5] = "8";
+                } else if (i2 == 5 || i2 == 6) {
+                    if (field2 == "1") {
+                        tablahtml += "<td>Muy común</td>";
+                    } else if (field2 == "2") {
+                        tablahtml += "<td>Común</td>";
+                    } else if (field2 == "3") {
+                        tablahtml += "<td>Algo Común</td>";
+                    } else if (field2 == "4") {
+                        tablahtml += "<td>Poco Común</td>";
+                    } else if (field2 == "5") {
+                        tablahtml += "<td>Algo Raro</td>";
+                    } else if (field2 == "6") {
+                        tablahtml += "<td>Raro</td>";
+                    } else if (field2 == "7") {
+                        tablahtml += "<td>Super Raro</td>";
+                    } else if (field2 == "8") {
+                        tablahtml += "<td>Rarísimo</td>";
+                    } else if (field2 == "9") {
+                        tablahtml += "<td>Ultra rarísimo</td>";
+                    }
+
+                } else if (i2 != 2) {
+                    if (field2 == null) {
+                        field2 = "";
+                    }
+                    tablahtml += "<td>" + field2 + "</td>";
                 }
-            });
+            })
+            tablahtml += "</tr>";
         });
-    </script>
+        tablahtml += "</table>";
+        $("#datos").html(tablahtml);
+    } else {
+        $("#datos").html("<h1>No se encontró a ese entrenador");
+    }
+    };
+    $.getJSON(pokemons, function (result) {
+    resultado = result;
+    $.each(result, function (i, field) {});
+    });
+    $("#enviar").click(pokemonDatos);
+    $("#entrenador").keypress(function() {
+        if (event.which == 13) pokemonDatos();
+    });
+
+    });
+</script>
+
 </html>
