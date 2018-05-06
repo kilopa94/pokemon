@@ -13,83 +13,95 @@
 
 <body>
     <div class="container">
-            <div class="form-group">
-                <input type="text" id="entrenador" class="form-control" placeholder="Introduce el nombre del entrenador">
-                <input type="submit" id="enviar" value="Enviar">
+        <div class="row">
+            <div class="form-group col-xs-12 col-md-12">
+                <div class="row">
+                    <input type="text" id="entrenador" class="form-control col-xs-12 col-md-10" placeholder="Introduce el nombre del entrenador">
+                    <input type="submit" id="enviar" value="Enviar" class="col-xs-12 col-md-2">
+                </div>
             </div>
-        <div id="datos" class="table-responsive">
+            <div id="datos" class="table-responsive col-xs-12 col-md-12">
 
+            </div>
         </div>
     </div>
 </body>
 <script>
     $(document).ready(function () {
-    var resultado;
-    var pokemons = "https://danirivasmayor.000webhostapp.com/pokemon/listarTodo.php";
-    var pokemonDatos = function () {
-    if (resultado[$("#entrenador").val().toLowerCase()]) {
-        var tablahtml =
-            "<table class='table table-hover'><tr id='primer'><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
-        $.each(resultado[$("#entrenador").val().toLowerCase()], function (i, field) {
-            tablahtml += "<tr>";
-            $.each(resultado[$("#entrenador").val().toLowerCase()][i], function (i2, field2) {
-                if (i2 == 0) {
-                    if (resultado[$("#entrenador").val().toLowerCase()][i][2] == "si") {
-                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val().toLowerCase()][i][7]+"-shiny.gif' width='40px'><br>" + field2 + "</td>";
-                        resultado[$("#entrenador").val().toLowerCase()][i][5] = "8";
-                    } else {
-                        tablahtml += "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/"+resultado[$("#entrenador").val().toLowerCase()][i][7]+".gif' width='40px'><br>" + field2 + "</td>";
-                    }
-                } else if (i2 == 5 || i2 == 6) {
-                    if (field2 == "1") {
-                        tablahtml += "<td>Muy común</td>";
-                    } else if (field2 == "2") {
-                        tablahtml += "<td>Común</td>";
-                    } else if (field2 == "3") {
-                        tablahtml += "<td>Algo Común</td>";
-                    } else if (field2 == "4") {
-                        tablahtml += "<td>Poco Común</td>";
-                    } else if (field2 == "5") {
-                        tablahtml += "<td>Algo Raro</td>";
-                    } else if (field2 == "6") {
-                        tablahtml += "<td>Raro</td>";
-                    } else if (field2 == "7") {
-                        tablahtml += "<td>Super Raro</td>";
-                    } else if (field2 == "8") {
-                        tablahtml += "<td>Rarísimo</td>";
-                    } else if (field2 == "9") {
-                        tablahtml += "<td>Ultra rarísimo</td>";
-                    }
+        var resultado;
+        var pokemons = "https://danirivasmayor.000webhostapp.com/pokemon/listarTodo.php";
+        var pokemonDatos = function () {
+            if (resultado[$("#entrenador").val().toLowerCase()]) {
+                var tablahtml =
+                    "<table class='table table-hover'><tr id='primer'><th>ID EQUIPO</th><th>Pokemon</th><th>Nivel</th><th>Primer Tipo</th><th>Segundo Tipo</th><th>Aparición</th><th>Captura</th></tr>";
+                $.each(resultado[$("#entrenador").val().toLowerCase()], function (i, field) {
+                    tablahtml += "<tr>";
+                    $.each(resultado[$("#entrenador").val().toLowerCase()][i], function (i2, field2) {
+                        if (i2 == 0) {
+                            tablahtml += "<td>"+resultado[$("#entrenador").val().toLowerCase()][i][8]+"</td>";
+                            if (resultado[$("#entrenador").val().toLowerCase()][i][2] ==
+                                "si") {
+                                tablahtml +=
+                                    "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/" +
+                                    resultado[$("#entrenador").val().toLowerCase()][i][7] +
+                                    "-shiny.gif'><br>" + field2 + "</td>";
+                                resultado[$("#entrenador").val().toLowerCase()][i][5] = "8";
+                            } else {
+                                tablahtml +=
+                                    "<td><img src='https://danirivasmayor.000webhostapp.com/pokemon/img/" +
+                                    resultado[$("#entrenador").val().toLowerCase()][i][7] +
+                                    ".gif'><br>" + field2 + "</td>";
+                            }
+                        } else if (i2 == 5 || i2 == 6) {
+                            if (field2 == "1") {
+                                tablahtml += "<td>Muy común</td>";
+                            } else if (field2 == "2") {
+                                tablahtml += "<td>Común</td>";
+                            } else if (field2 == "3") {
+                                tablahtml += "<td>Algo Común</td>";
+                            } else if (field2 == "4") {
+                                tablahtml += "<td>Poco Común</td>";
+                            } else if (field2 == "5") {
+                                tablahtml += "<td>Algo Raro</td>";
+                            } else if (field2 == "6") {
+                                tablahtml += "<td>Raro</td>";
+                            } else if (field2 == "7") {
+                                tablahtml += "<td>Super Raro</td>";
+                            } else if (field2 == "8") {
+                                tablahtml += "<td>Rarísimo</td>";
+                            } else if (field2 == "9") {
+                                tablahtml += "<td>Ultra rarísimo</td>";
+                            }
 
-                } else if (i2 != 2 && i2 != 7) {
-                    if (field2 == null) {
-                        field2 = "";
-                    }
-                    tablahtml += "<td>" + field2 + "</td>";
+                        } else if (i2 != 2 && i2 != 7 && i2 != 8) {
+                            if (field2 == null) {
+                                field2 = "";
+                            }
+                            tablahtml += "<td>" + field2 + "</td>";
+                        }
+                    })
+                    tablahtml += "</tr>";
+                });
+                tablahtml += "</table>";
+                $("#datos").html(tablahtml);
+            } else {
+                $("#datos").html("<h1>No se encontró a ese entrenador");
+            }
+        };
+        $.getJSON(pokemons, function (result) {
+            resultado = result;
+            if (new URLSearchParams(window.location.search).get("entrenador")) {
+                if (new URLSearchParams(window.location.search).get("entrenador").length > 0) {
+                    $("#entrenador").val(new URLSearchParams(window.location.search).get("entrenador"));
+                    $("#enviar").click();
                 }
-            })
-            tablahtml += "</tr>";
+            }
+            $.each(result, function (i, field) {});
         });
-        tablahtml += "</table>";
-        $("#datos").html(tablahtml);
-    } else {
-        $("#datos").html("<h1>No se encontró a ese entrenador");
-    }
-    };
-    $.getJSON(pokemons, function (result) {
-    resultado = result;
-    if (new URLSearchParams(window.location.search).get("entrenador")) {
-        if (new URLSearchParams(window.location.search).get("entrenador").length > 0) {
-            $("#entrenador").val(new URLSearchParams(window.location.search).get("entrenador"));
-            $("#enviar").click();
-        }
-    }
-    $.each(result, function (i, field) {});
-    });
-    $("#enviar").click(pokemonDatos);
-    $("#entrenador").keypress(function() {
-        if (event.which == 13) pokemonDatos();
-    });
+        $("#enviar").click(pokemonDatos);
+        $("#entrenador").keypress(function () {
+            if (event.which == 13) pokemonDatos();
+        });
 
     });
 </script>
