@@ -4,36 +4,46 @@
     <title>Listado Pokemon</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
     <style>
         .invisible {
             display: none;
         }
-        .visible {
-            position: fixed;
-            overflow: scroll;
+        .ui-autocomplete {
             width: 300px;
-            top: 40px;
-            background: #DFDFDF;
             height: 300px;
-            padding: 5px;
+            overflow: scroll;
+            overflow-x: hidden;
+            background: #DFDFDF;
+            padding: 0px;
             text-transform: capitalize;
-            z-index: 8;
         }
-        .lnent:hover {
+        .ui-state-active,
+        .ui-widget-content .ui-state-active,
+        .ui-widget-header .ui-state-active,
+        a.ui-button:active,
+        .ui-button:active,
+        .ui-button.ui-state-active:hover {
             background: #4D4D4D;
             color: white;
             cursor: pointer;
         }
         #entrenador {
             text-transform: capitalize;
+        }
+        li {
+            list-style-type: none;
+        }
+        .ui-helper-hidden-accessible {
+            display: none !important;
         }
     </style>
 </head>
@@ -56,6 +66,7 @@
 </body>
 <script>
     $(document).ready(function () {
+        var entrenadores = []
         var resultado;
         var pokemons = "https://danirivasmayor.000webhostapp.com/pokemon/listarTodo.php";
         var pokemonDatos = function () {
@@ -113,34 +124,46 @@
                 tablahtml += "</tbody></table>";
                 $("#datos").html(tablahtml);
                 $("#tablapkmn").dataTable({
+                    responsive: true,
                     language: {
-                        processing:     "Procesando...",
-                        search:         "Buscar en la tabla:",
-                        lengthMenu:    "Mostrar _MENU_ datos",
-                        info:           "Mostrando _START_ de _END_ datos del total de _TOTAL_",
-                        infoEmpty:      "Mostrando 0 datos encontrados",
-                        infoFiltered:   "(filtrando _MAX_ en total)",
-                        infoPostFix:    "",
-                        loadingRecords: "Cargando datos...",
-                        zeroRecords:    "No hay elementos para mostrar",
-                        emptyTable:     "No hay datos disponibles en la tabla",
-                        paginate: {
-                            first:      "Primer",
-                            previous:   "Anterior",
-                            next:       "Siguiente",
-                            last:       "&Uacute;ltimo"
+                        "sProcessing":     "Procesando...",
+                        "sLengthMenu":     "Mostrar _MENU_ registros",
+                        "sZeroRecords":    "No se encontraron resultados",
+                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix":    "",
+                        "sSearch":         "Buscar:",
+                        "sUrl":            "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "Primero",
+                            "sLast":     "Último",
+                            "sNext":     "Siguiente",
+                            "sPrevious": "Anterior"
                         },
-                        aria: {
-                            sortAscending:  ": activar para ordenar la columna en orden ascendente",
-                            sortDescending: ": activar para ordenar la columna en orden descendente"
-                        },
-                        responsive: true
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    
                     }
                 });
             } else {
                 $("#datos").html("<h1>No se encontró a ese entrenador");
             }
         };
+        $("#datos").on('click', '#tablapkmn_ellipsis', function() {
+            var paginaAIr = prompt("Indica a que página ir.");
+            console.log(paginaAIr);
+            if (parseInt(paginaAIr)) {
+                $('#tablapkmn').DataTable().page(parseInt(paginaAIr-1)).draw( 'page' );
+            } else {
+                alert("No has introducido un número");
+            }
+        })
         $.getJSON(pokemons, function (result) {
             resultado = result;
             if (new URLSearchParams(window.location.search).get("entrenador")) {
@@ -149,33 +172,42 @@
                     $("#enviar").click();
                 }
             }
-            $.each(result, function (i, field) {});
+            $.each(result, function (i, field) {
+                entrenadores.push(i.substr(0,1).toUpperCase()+i.substr(1));
+            });
+
+            $( "#entrenador" ).autocomplete({
+                source: entrenadores
+            });
+            $(".ui-autocomplete").click(function() {
+                $("#enviar").click();
+            });
         });
         $("#enviar").click(pokemonDatos);
         $("#enviar").click(function(){
             $("#listado").removeClass("visible").addClass("invisible"); 
         });
         $("#entrenador").keyup(function () {
-            if ($("#entrenador").val().length > 0){
+            /*if ($("#entrenador").val().length > 0){
                 $("#listado").removeClass("invisible").addClass("visible");
                 var listanicks = "";
                 var cont=0;
                 $.each(resultado, function(k,v) {
                     if (k.indexOf($("#entrenador").val().toLowerCase()) == 0){
-                        console.log(k);
                         listanicks += "<div class='lnent'>"+k+"</div><hr>";
                         cont++;
                     }
                 });
                 
-                console.log(listanicks);
                 $("#listado").html(listanicks);
             } else {
                 $("#listado").removeClass("visible").addClass("invisible"); 
-            }
+            }*/
             if (event.which == 13) {
                 pokemonDatos();
-                $("#listado").removeClass("visible").addClass("invisible");
+                $(".ui-autocomplete").empty();
+                $(".ui-autocomplete").css("display", "none");
+                //$("#listado").removeClass("visible").addClass("invisible");
             }
         });
         $("#listado").click(function(e) {
